@@ -50,7 +50,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   bool _isLiveview = false;
-  bool _isExpanded = false;
+  bool _isImagingExpanded = false;
+  bool _isStageExpanded = false;
 
   void _liveviewSwitchOnChanged(bool valueChanged) {
     setState(() {
@@ -110,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         ],
                       ),
                     ),
-                    isExpanded: _isExpanded),
+                    isExpanded: _isImagingExpanded),
                 ExpansionPanel(
                     headerBuilder: (BuildContext context, _isExpanded) {
                       return const ListTile(
@@ -129,11 +130,18 @@ class _MyHomePageState extends State<MyHomePage> {
                         ],
                       ),
                     ),
-                    isExpanded: _isExpanded),
+                    isExpanded: _isStageExpanded),
               ],
               expansionCallback: (int index, bool isExpanded) {
                 setState(() {
-                  _isExpanded = !isExpanded;
+                  switch (index) {
+                    case 0:
+                      _isImagingExpanded = !isExpanded;
+                      break;
+                    case 1:
+                      _isStageExpanded = !isExpanded;
+                      break;
+                  }
                 });
               },
               animationDuration: const Duration(milliseconds: 150)),
