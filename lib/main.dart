@@ -53,6 +53,8 @@ class _MyHomePageState extends State<MyHomePage> {
   bool _isImagingExpanded = false;
   bool _isStageExpanded = false;
 
+  var _cameraModel = "none";
+
   void _liveviewSwitchOnChanged(bool valueChanged) {
     setState(() {
       _isLiveview = valueChanged;
@@ -73,78 +75,103 @@ class _MyHomePageState extends State<MyHomePage> {
           // the App.build method, and use it to set our appbar title.
           title: Text(widget.title),
         ),
-        body: SingleChildScrollView(
-          child: ExpansionPanelList(
-              children: [
-                ExpansionPanel(
-                    headerBuilder: (BuildContext context, _isExpanded) {
-                      return const ListTile(
-                        title: Text("Imaging"),
-                        leading: Icon(
-                          Icons.camera_alt_rounded,
-                          color: Colors.amber,
-                        ),
-                      );
-                    },
-                    body: ListTile(
-                      leading: Icon(Icons.camera),
-                      subtitle: Column(
-                        children: [
-                          Row(children: [
-                            Switch(
-                                value: _isLiveview,
-                                onChanged: _liveviewSwitchOnChanged),
-                            Text("Liveview")
-                          ]),
-                          Row(children: [
-                            Switch(
-                                value: _isLiveview,
-                                onChanged: _liveviewSwitchOnChanged),
-                            Text("OM")
-                          ]),
-                          Switch(
-                              value: _isLiveview,
-                              onChanged: _liveviewSwitchOnChanged),
-                          Switch(
-                              value: _isLiveview,
-                              onChanged: _liveviewSwitchOnChanged),
-                        ],
-                      ),
-                    ),
-                    isExpanded: _isImagingExpanded),
-                ExpansionPanel(
-                    headerBuilder: (BuildContext context, _isExpanded) {
-                      return const ListTile(
-                        title: Text("Stage"),
-                      );
-                    },
-                    body: ListTile(
-                      leading: Icon(Icons.camera),
-                      subtitle: Column(
-                        children: [
-                          Switch(
-                            value: _isLiveview,
-                            onChanged: _liveviewSwitchOnChanged,
-                            activeColor: Colors.amber,
+        body: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Container(
+            width: 320,
+            child: SingleChildScrollView(
+              child: ExpansionPanelList(
+                  children: [
+                    ExpansionPanel(
+                        backgroundColor: Colors.blueGrey.shade300,
+                        headerBuilder: (BuildContext context, _isExpanded) {
+                          return const ListTile(
+                            title: Text("Imaging"),
+                            leading: Icon(
+                              Icons.camera_alt_rounded,
+                              color: Colors.amber,
+                            ),
+                          );
+                        },
+                        body: Card(
+                          child: ListTile(
+                            leading: Icon(Icons.camera),
+                            title: Text(
+                              "Camera model: $_cameraModel",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  backgroundColor: Colors.amber),
+                            ),
+                            subtitle: Column(
+                              children: [
+                                Row(children: [
+                                  Switch(
+                                      value: _isLiveview,
+                                      onChanged: _liveviewSwitchOnChanged),
+                                  Text("Liveview")
+                                ]),
+                                Row(children: [
+                                  Switch(
+                                      value: _isLiveview,
+                                      onChanged: _liveviewSwitchOnChanged),
+                                  Text("OM")
+                                ]),
+                                Switch(
+                                    value: _isLiveview,
+                                    onChanged: _liveviewSwitchOnChanged),
+                                Switch(
+                                    value: _isLiveview,
+                                    onChanged: _liveviewSwitchOnChanged),
+                              ],
+                            ),
                           ),
-                        ],
-                      ),
-                    ),
-                    isExpanded: _isStageExpanded),
-              ],
-              expansionCallback: (int index, bool isExpanded) {
-                setState(() {
-                  switch (index) {
-                    case 0:
-                      _isImagingExpanded = !isExpanded;
-                      break;
-                    case 1:
-                      _isStageExpanded = !isExpanded;
-                      break;
-                  }
-                });
-              },
-              animationDuration: const Duration(milliseconds: 150)),
-        ));
+                        ),
+                        isExpanded: _isImagingExpanded),
+                    ExpansionPanel(
+                        backgroundColor: Colors.blueGrey.shade300,
+                        headerBuilder: (BuildContext context, _isExpanded) {
+                          return const ListTile(
+                            title: Text("Stage"),
+                          );
+                        },
+                        body: ListTile(
+                          leading: Icon(Icons.camera),
+                          subtitle: Column(
+                            children: [
+                              Switch(
+                                value: _isLiveview,
+                                onChanged: _liveviewSwitchOnChanged,
+                                activeColor: Colors.amber,
+                              ),
+                            ],
+                          ),
+                        ),
+                        isExpanded: _isStageExpanded),
+                  ],
+                  expansionCallback: (int index, bool isExpanded) {
+                    setState(() {
+                      switch (index) {
+                        case 0:
+                          _isImagingExpanded = !isExpanded;
+                          break;
+                        case 1:
+                          _isStageExpanded = !isExpanded;
+                          break;
+                      }
+                    });
+                  },
+                  animationDuration: const Duration(milliseconds: 150)),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.all(12),
+            child: Image.network(
+              'https://i.imgur.com/bjFOdVF.jpg',
+              scale: 1,
+              alignment: Alignment.topCenter,
+              repeat: ImageRepeat.noRepeat,
+              matchTextDirection: false,
+            ),
+          )
+        ]));
   }
 }
