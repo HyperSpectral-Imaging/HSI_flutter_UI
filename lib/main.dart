@@ -55,6 +55,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   var _cameraModel = "none";
 
+  void _disconnectIxon() {}
+
   void _liveviewSwitchOnChanged(bool valueChanged) {
     setState(() {
       _isLiveview = valueChanged;
@@ -77,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Container(
-            width: 320,
+            width: 360,
             child: SingleChildScrollView(
               child: ExpansionPanelList(
                   children: [
@@ -95,13 +97,24 @@ class _MyHomePageState extends State<MyHomePage> {
                         body: Card(
                           child: ListTile(
                             leading: Icon(Icons.camera),
-                            title: Text(
-                              "Camera model: $_cameraModel",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  backgroundColor: Colors.amber),
-                            ),
+                            title: Row(children: [
+                              Text(
+                                "Camera model: $_cameraModel",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    backgroundColor: Colors.amber),
+                              ),
+                              SizedBox(
+                                width: 24,
+                              ),
+                              TextButton(
+                                  onPressed: _cameraModel == 'none'
+                                      ? null
+                                      : _disconnectIxon,
+                                  child: Text("Disconnect"))
+                            ]),
                             subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(children: [
                                   Switch(
