@@ -55,7 +55,17 @@ class _MyHomePageState extends State<MyHomePage> {
 
   var _cameraModel = "none";
 
-  void _disconnectIxon() {}
+  void _disconnectIxon() {
+    setState(() {
+      _cameraModel = "none";
+    });
+  }
+
+  void _connectIxon() {
+    setState(() {
+      _cameraModel = "Ixon";
+    });
+  }
 
   void _liveviewSwitchOnChanged(bool valueChanged) {
     setState(() {
@@ -109,9 +119,11 @@ class _MyHomePageState extends State<MyHomePage> {
                               ),
                               TextButton(
                                   onPressed: _cameraModel == 'none'
-                                      ? null
+                                      ? _connectIxon
                                       : _disconnectIxon,
-                                  child: Text("Disconnect"))
+                                  child: Text(_cameraModel == 'none'
+                                      ? "Connect"
+                                      : "Disconnect"))
                             ]),
                             subtitle: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
